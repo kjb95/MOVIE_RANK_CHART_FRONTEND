@@ -1,5 +1,5 @@
 <template>
-	<div>The Body Footer</div>
+	<div>Statistics View</div>
 </template>
 
 <script setup lang="ts"></script>

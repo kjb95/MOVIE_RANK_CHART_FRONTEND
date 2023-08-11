@@ -13,8 +13,6 @@ const addToken = (config: InternalAxiosRequestConfig<any>) => {
 	const refreshToken = cookies.get(REFRESH_TOKEN_COOKIE_KEY_NAME);
 	config.headers[AUTHORIZATION_HEADER_NAME] = BEARER + accessToken;
 	config.headers[REFRESH_TOKEN_HEADER_NAME] = BEARER + refreshToken;
-	console.log('at : ', accessToken);
-	console.log('rt : ', refreshToken);
 	return config;
 };
 

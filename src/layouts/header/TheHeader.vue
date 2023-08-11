@@ -1,32 +1,22 @@
 <template>
-	<v-spacer />
-	<v-tabs color="pink">
-		<v-tab v-for="link in links" :key="link" :to="link.path" class="text-h4 font-weight-bold">
-			{{ link.name }}
-		</v-tab>
+	<v-tabs color="pink" v-model="activeTab">
+		<v-tab to="/rank/total/daily" class="font-weight-bold text-h4">랭킹</v-tab>
+		<v-tab to="/statistics/line-chart" class="font-weight-bold text-h4">통계</v-tab>
+		<v-tab to="/chat" class="font-weight-bold text-h4">채팅</v-tab>
+		<v-tab to="/movie-detail" class="font-weight-bold text-h4">영화상세</v-tab>
 	</v-tabs>
-	<v-spacer />
 </template>
 
 <script setup lang="ts">
-const links = [
-	{
-		name: '랭킹',
-		path: '/rank',
-	},
-	{
-		name: '통계',
-		path: '/statistics',
-	},
-	{
-		name: '채팅',
-		path: '/chat',
-	},
-	{
-		name: '영화상세',
-		path: '/movie-detail',
-	},
-];
+import { useRoute } from 'vue-router';
+import { ref, watch } from 'vue';
+
+const route = useRoute();
+const activeTab = ref(route.path);
+watch(
+	() => route.path,
+	(newPath, oldPath) => (activeTab.value = newPath),
+);
 </script>
 
 <style scoped></style>

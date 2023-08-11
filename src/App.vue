@@ -1,15 +1,15 @@
 <template>
 	<v-app>
-		<v-app-bar app>
-			<TheHeader />
+		<v-app-bar app height="100">
+			<v-spacer />
+			<RouterView name="header" />
+			<v-spacer />
 		</v-app-bar>
 		<v-navigation-drawer expand-on-hover rail app>
 			<TheNav />
 		</v-navigation-drawer>
 		<v-main app>
-			<v-container>
-				<TheContents />
-			</v-container>
+			<RouterView />
 		</v-main>
 		<v-footer app>
 			<TheFooter />
@@ -18,8 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import TheHeader from '@/layouts/header/TheHeader.vue';
-import TheContents from '@/layouts/section/TheSection.vue';
 import TheFooter from '@/layouts/footer/TheFooter.vue';
 import TheNav from '@/layouts/nav/TheNav.vue';
 </script>
@@ -27,5 +25,6 @@ import TheNav from '@/layouts/nav/TheNav.vue';
 <style>
 a {
 	text-decoration: none;
+	color: black;
 }
 </style>

@@ -3,30 +3,67 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import type { Router, RouteRecordRaw } from 'vue-router';
 
 import ChatView from '../views/chat/ChatView.vue';
-import RankView from '../views/rank/RankView.vue';
-import StatisticsView from '@/views/statistics/StatisticsView.vue';
 import MovieDetailsView from '@/views/moviedetails/MovieDetailsView.vue';
+import RankView from '@/views/rank/RankView.vue';
+import TheStatisticsHeader from '@/layouts/header/TheStatisticsHeader.vue';
+import TheRankHeader from '@/layouts/header/TheRankHeader.vue';
+import LineChartView from '@/views/statistics/LineChartView.vue';
+import PieChartView from '@/views/statistics/PieChartView.vue';
+import TheHeader from '@/layouts/header/TheHeader.vue';
 
 const routes: Array<RouteRecordRaw> = [
 	{
-		path: '/rank',
-		name: 'rank',
-		component: RankView,
+		path: '/rank/total/daily',
+		name: 'totalDailyRank',
+		components: { default: RankView, header: TheRankHeader },
+		props: { header: { periodType: 'daily' } },
 	},
 	{
-		path: '/statistics',
-		name: 'statistics',
-		component: StatisticsView,
+		path: '/rank/korean/daily',
+		name: 'koreanDailyRank',
+		components: { default: RankView, header: TheRankHeader },
+		props: { header: { periodType: 'daily' } },
 	},
 	{
-		path: '/chat',
-		name: 'chat',
-		component: ChatView,
+		path: '/rank/foreign/daily',
+		name: 'foreignDailyRank',
+		components: { default: RankView, header: TheRankHeader },
+		props: { header: { periodType: 'daily' } },
 	},
+	{
+		path: '/rank/total/weekly',
+		name: 'totalWeeklyRank',
+		components: { default: RankView, header: TheRankHeader },
+		props: { header: { periodType: 'weekly' } },
+	},
+	{
+		path: '/rank/korean/weekly',
+		name: 'koreanWeeklyRank',
+		components: { default: RankView, header: TheRankHeader },
+		props: { header: { periodType: 'weekly' } },
+	},
+	{
+		path: '/rank/foreign/weekly',
+		name: 'foreignWeeklyRank',
+		components: { default: RankView, header: TheRankHeader },
+		props: { header: { periodType: 'weekly' } },
+	},
+	{
+		path: '/statistics/line-chart',
+		name: 'lineChart',
+		components: { default: LineChartView, header: TheStatisticsHeader },
+	},
+	{
+		path: '/statistics/pie-chart',
+		name: 'pieChart',
+		components: { default: PieChartView, header: TheStatisticsHeader },
+	},
+
+	{ path: '/chat', name: 'chat', components: { default: ChatView, header: TheHeader } },
 	{
 		path: '/movie-detail',
 		name: 'movieDetail',
-		component: MovieDetailsView,
+		components: { default: MovieDetailsView, header: TheHeader },
 	},
 ];
 
