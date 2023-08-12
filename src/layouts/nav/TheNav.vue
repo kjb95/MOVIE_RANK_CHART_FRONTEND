@@ -1,14 +1,22 @@
 <template>
-	<v-list>
-		<v-list-item v-if="user.isLogin" :prepend-avatar="user.state.picture" :title="user.state.name" :subtitle="user.state.email"></v-list-item>
-		<v-list-item v-else :prepend-avatar="defaultPicture" @click="openOauthWindow">
-			<v-list-item-title class="font-weight-bold">로그인</v-list-item-title>
-		</v-list-item>
-	</v-list>
-	<v-divider></v-divider>
+	<v-navigation-drawer expand-on-hover rail app>
+		<v-row>
+			<v-col>
+				<v-list>
+					<v-list-item v-if="user.isLogin" :prepend-avatar="user.state.picture" :title="user.state.name" :subtitle="user.state.email"></v-list-item>
+					<v-list-item v-else :prepend-avatar="defaultPicture" @click="openOauthWindow">
+						<v-list-item-title class="font-weight-bold">로그인</v-list-item-title>
+					</v-list-item>
+				</v-list>
+			</v-col>
+		</v-row>
+		<v-row>
+			<v-divider></v-divider>
+		</v-row>
+	</v-navigation-drawer>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useUsersStore } from '@/store/users';
 import { useCookies } from 'vue3-cookies';
 import { AUTHENTICATION_DONE_COOKIE_KEY_NAME, OAUTH2_LOGIN_URL } from '@/constants/api';

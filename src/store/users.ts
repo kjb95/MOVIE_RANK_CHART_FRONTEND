@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { findUserApi } from '@/api/users';
 import { computed, reactive, ref } from 'vue';
 import { useCookies } from 'vue3-cookies';
-import { ACCESS_TOKEN_COOKIE_KEY_NAME, REFRESH_TOKEN_COOKIE_KEY_NAME } from '@/constants/api';
+import { ACCESS_TOKEN_COOKIE_KEY_NAME } from '@/constants/api';
 
 const { cookies } = useCookies();
 
@@ -11,7 +11,7 @@ export const useUsersStore = defineStore('users', () => {
 	const isLogin = computed(() => computeIsLogin());
 
 	const computeIsLogin = () => {
-		if (state.id === '' && (cookies.isKey(ACCESS_TOKEN_COOKIE_KEY_NAME) || cookies.isKey(REFRESH_TOKEN_COOKIE_KEY_NAME))) {
+		if (state.id === '' && cookies.isKey(ACCESS_TOKEN_COOKIE_KEY_NAME)) {
 			loadUser();
 		}
 		return state.id !== '';

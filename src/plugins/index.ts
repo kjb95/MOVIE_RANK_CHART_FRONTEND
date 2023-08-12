@@ -9,8 +9,7 @@ import TheStatisticsHeader from '@/layouts/header/TheStatisticsHeader.vue';
 import TheRankHeader from '@/layouts/header/TheRankHeader.vue';
 import LineChartView from '@/views/statistics/LineChartView.vue';
 import PieChartView from '@/views/statistics/PieChartView.vue';
-import TheHeader from '@/layouts/header/TheHeader.vue';
-
+import TheBasicHeader from '@/layouts/header/TheBasicHeader.vue';
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/rank/total/daily',
@@ -59,11 +58,11 @@ const routes: Array<RouteRecordRaw> = [
 		components: { default: PieChartView, header: TheStatisticsHeader },
 	},
 
-	{ path: '/chat', name: 'chat', components: { default: ChatView, header: TheHeader } },
+	{ path: '/chat', name: 'chat', components: { default: ChatView, header: TheBasicHeader } },
 	{
 		path: '/movie-detail',
 		name: 'movieDetail',
-		components: { default: MovieDetailsView, header: TheHeader },
+		components: { default: MovieDetailsView, header: TheBasicHeader },
 	},
 ];
 
