@@ -2,7 +2,7 @@
 	<v-app>
 		<TheHeader />
 		<TheNav />
-		<TheSection />
+		<TheSection class="mt-7" />
 		<TheFooter />
 	</v-app>
 </template>

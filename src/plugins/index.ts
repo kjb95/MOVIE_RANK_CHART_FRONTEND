@@ -3,13 +3,13 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import type { Router, RouteRecordRaw } from 'vue-router';
 
 import ChatView from '../views/chat/ChatView.vue';
-import MovieDetailsView from '@/views/moviedetails/MovieDetailsView.vue';
 import RankView from '@/views/rank/RankView.vue';
 import TheStatisticsHeader from '@/layouts/header/TheStatisticsHeader.vue';
 import TheRankHeader from '@/layouts/header/TheRankHeader.vue';
 import LineChartView from '@/views/statistics/LineChartView.vue';
 import PieChartView from '@/views/statistics/PieChartView.vue';
 import TheBasicHeader from '@/layouts/header/TheBasicHeader.vue';
+import MovieDetailsSearchView from '@/views/moviedetails/MovieDetailsSearchView.vue';
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/rank/total/daily',
@@ -62,7 +62,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/movie-detail',
 		name: 'movieDetail',
-		components: { default: MovieDetailsView, header: TheBasicHeader },
+		components: { default: MovieDetailsSearchView, header: TheBasicHeader },
 	},
 ];
 

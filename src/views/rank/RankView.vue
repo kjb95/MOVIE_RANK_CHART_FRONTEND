@@ -1,5 +1,5 @@
 <template>
-	<v-row class="mt-3">
+	<v-row>
 		<v-col />
 		<v-col />
 		<v-col>
