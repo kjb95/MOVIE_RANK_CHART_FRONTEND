@@ -4,7 +4,7 @@
 			<RouterLink :to="`/rank/total/${periodType}`" class="font-weight-bold text-h4 text-pink mt-16">랭킹</RouterLink>
 		</v-row>
 		<v-row>
-			<v-tabs color="pink" v-model="activeTab">
+			<v-tabs color="pink" v-model="path">
 				<RouterLink :to="`/rank/total/${periodType}`">
 					<v-tab class="font-weight-bold text-h5" height="48" :value="`/rank/total/${periodType}`">전체</v-tab>
 				</RouterLink>
@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 
 defineProps({
@@ -31,11 +31,8 @@ defineProps({
 });
 
 const route = useRoute();
-const activeTab = ref(route.path);
-watch(
-	() => route.path,
-	(newPath, oldPath) => (activeTab.value = newPath),
-);
+const path = ref(route.path);
+watchEffect(() => (path.value = route.path));
 </script>
 
 <style scoped></style>

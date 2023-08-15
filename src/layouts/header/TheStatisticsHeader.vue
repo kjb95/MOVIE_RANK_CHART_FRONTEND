@@ -5,7 +5,7 @@
 			<RouterLink to="/statistics/line-chart" class="font-weight-bold text-h4 text-pink mt-16">통계</RouterLink>
 		</v-row>
 		<v-row>
-			<v-tabs color="pink" v-model="activeTab">
+			<v-tabs color="pink" v-model="path">
 				<RouterLink to="/statistics/line-chart">
 					<v-tab class="font-weight-bold text-h5" height="48" value="/statistics/line-chart">라인차트</v-tab>
 				</RouterLink>
@@ -21,14 +21,11 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { ref, watch } from 'vue';
+import { ref, watchEffect } from 'vue';
 
 const route = useRoute();
-const activeTab = ref(route.path);
-watch(
-	() => route.path,
-	(newPath, oldPath) => (activeTab.value = newPath),
-);
+const path = ref(route.path);
+watchEffect(() => (path.value = route.path));
 </script>
 
 <style scoped></style>
