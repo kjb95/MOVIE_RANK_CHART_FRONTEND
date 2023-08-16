@@ -23,15 +23,15 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { findMoviesApi } from '@/api/movies';
+import { findMoviesByTitleApi } from '@/api/movies';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 
 const movie = ref();
 const movieTitleSearchResult = ref([]);
 
-findMoviesApi(false, '').then(res => (movieTitleSearchResult.value = res.data.movies));
+findMoviesByTitleApi('', false).then(res => (movieTitleSearchResult.value = res.data.movies));
 
-watch(movie, () => (window.location.href = '/movie-detail/' + movie.value));
+watch(movie, () => (window.location.href = '/movie-details/' + movie.value));
 </script>
 
 <style scoped></style>

@@ -5,7 +5,7 @@
 			<RouterLink to="/statistics/line-chart" class="font-weight-bold text-h4 text-pink mt-16">통계</RouterLink>
 		</v-row>
 		<v-row>
-			<v-tabs color="pink" v-model="path">
+			<v-tabs v-model="path" selected-class="text-pink">
 				<RouterLink to="/statistics/line-chart">
 					<v-tab class="font-weight-bold text-h5" height="48" value="/statistics/line-chart">라인차트</v-tab>
 				</RouterLink>
@@ -16,7 +16,7 @@
 		</v-row>
 	</div>
 	<v-tab to="/chat" class="font-weight-bold text-h4">채팅</v-tab>
-	<v-tab to="/movie-detail" class="font-weight-bold text-h4">영화상세</v-tab>
+	<v-tab to="/movie-details" class="font-weight-bold text-h4">영화상세</v-tab>
 </template>
 
 <script setup lang="ts">

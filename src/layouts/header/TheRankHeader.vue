@@ -4,7 +4,7 @@
 			<RouterLink :to="`/rank/total/${periodType}`" class="font-weight-bold text-h4 text-pink mt-16">랭킹</RouterLink>
 		</v-row>
 		<v-row>
-			<v-tabs color="pink" v-model="path">
+			<v-tabs v-model="path" selected-class="text-pink">
 				<RouterLink :to="`/rank/total/${periodType}`">
 					<v-tab class="font-weight-bold text-h5" height="48" :value="`/rank/total/${periodType}`">전체</v-tab>
 				</RouterLink>
@@ -19,7 +19,7 @@
 	</div>
 	<v-tab to="/statistics/line-chart" class="font-weight-bold text-h4">통계</v-tab>
 	<v-tab to="/chat" class="font-weight-bold text-h4">채팅</v-tab>
-	<v-tab to="/movie-detail" class="font-weight-bold text-h4">영화상세</v-tab>
+	<v-tab to="/movie-details" class="font-weight-bold text-h4">영화상세</v-tab>
 </template>
 
 <script setup lang="ts">

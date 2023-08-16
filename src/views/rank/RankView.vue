@@ -22,12 +22,12 @@
 		</v-col>
 		<v-col></v-col>
 		<v-col>
-			<v-tabs color="pink" v-model="path">
-				<RouterLink :to="`${pathWithoutPeriodType}/daily`">
-					<v-tab class="font-weight-bold text-h5" :value="`${pathWithoutPeriodType}/daily`">일간</v-tab>
+			<v-tabs v-model="path" selected-class="text-pink">
+				<RouterLink :to="dailyRankPath">
+					<v-tab class="font-weight-bold text-h5" :value="dailyRankPath">일간</v-tab>
 				</RouterLink>
-				<RouterLink :to="`${pathWithoutPeriodType}/weekly`">
-					<v-tab class="font-weight-bold text-h5" :value="`${pathWithoutPeriodType}/weekly`">주간</v-tab>
+				<RouterLink :to="weeklyRankPath">
+					<v-tab class="font-weight-bold text-h5" :value="weeklyRankPath">주간</v-tab>
 				</RouterLink>
 			</v-tabs>
 		</v-col>
@@ -36,6 +36,7 @@
 		<v-col cols="2"></v-col>
 		<v-col v-for="n in 5" :key="n" style="margin-left: -40px">
 			<MovieInfoCard
+				:movies-id="movieRankData[n - 1].moviesId"
 				:title="movieRankData[n - 1].title"
 				:rank-increment="movieRankData[n - 1].rankIncrement"
 				:rank="movieRankData[n - 1].rank"
@@ -51,6 +52,7 @@
 		<v-col cols="2"></v-col>
 		<v-col v-for="n in 5" :key="n" style="margin-left: -40px">
 			<MovieInfoCard
+				:movies-id="movieRankData[n + 4].moviesId"
 				:title="movieRankData[n + 4].title"
 				:rank-increment="movieRankData[n + 4].rankIncrement"
 				:rank="movieRankData[n + 4].rank"
@@ -79,6 +81,7 @@ const movieRankDataRange = useMovieRankDataRangeStore();
 const dailyDate = ref(getYesterday());
 const weeklyDate = ref([getPreviousWeekdayDate(1), getPreviousWeekdayDate(0)]);
 const movieRankData = ref([]);
+const path = ref(route.path);
 
 const computeFormattedDate = () => {
 	const date = periodType.value === 'daily' ? dailyDate.value : weeklyDate?.value[0];
@@ -94,8 +97,9 @@ const findMovieRank = () => {
 const periodType = computed(() => path.value.split('/')[3]);
 const pathWithoutPeriodType = computed(() => path.value.split('/').slice(0, 3).join('/'));
 const formattedDate = computed(computeFormattedDate);
-const path = computed(() => route.path);
 const formattedMovieRankType = computed(() => path.value.split('/').slice(2, 4).join('_').toUpperCase());
+const dailyRankPath = computed(() => pathWithoutPeriodType.value + '/daily');
+const weeklyRankPath = computed(() => pathWithoutPeriodType.value + '/weekly');
 
 watchEffect(findMovieRank);
 </script>
