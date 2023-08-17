@@ -25,13 +25,14 @@
 import { ref, watch } from 'vue';
 import { findMoviesByTitleApi } from '@/api/movies';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
+import router from '@/plugins';
 
 const movie = ref();
 const movieTitleSearchResult = ref([]);
 
 findMoviesByTitleApi('', false).then(res => (movieTitleSearchResult.value = res.data.movies));
 
-watch(movie, () => (window.location.href = '/movie-details/' + movie.value));
+watch(movie, () => router.push('/movie-details/' + movie.value));
 </script>
 
 <style scoped></style>

@@ -1,26 +1,22 @@
 import { defineStore } from 'pinia';
 import { findUserApi } from '@/api/users';
-import { computed, reactive, ref } from 'vue';
-import { useCookies } from 'vue3-cookies';
-import { ACCESS_TOKEN_COOKIE_KEY_NAME } from '@/constants/api';
-
-const { cookies } = useCookies();
+import { reactive } from 'vue';
+import { createAccessTokenApi } from '@/api/refreshToken';
 
 export const useUsersStore = defineStore('users', () => {
-	const state = reactive({ id: '', email: '', name: '', picture: '' });
-	const isLogin = computed(() => computeIsLogin());
-
-	const computeIsLogin = () => {
-		if (state.id === '' && cookies.isKey(ACCESS_TOKEN_COOKIE_KEY_NAME)) {
-			loadUser();
-		}
-		return state.id !== '';
-	};
+	const state = reactive({ id: '', email: '', name: '', picture: '', accessToken: '' });
 
 	const loadUser = () => {
-		findUserApi()
-			.then(res => findUserApiSuccess(res.data))
-			.catch(e => console.log(e));
+		createAccessTokenApi().then(res => createAccessTokenApiSuccess(res.data));
+	};
+
+	const createAccessTokenApiSuccess = (data: any) => {
+		// 리프레시 토큰이 유효하지 않은 경우
+		if (data == '') {
+			return;
+		}
+		state.accessToken = data.accessToken;
+		findUserApi().then(res => findUserApiSuccess(res.data));
 	};
 
 	const findUserApiSuccess = (data: any) => {
@@ -30,5 +26,13 @@ export const useUsersStore = defineStore('users', () => {
 		state.picture = data.picture;
 	};
 
-	return { state, isLogin };
+	const clear = () => {
+		state.id = '';
+		state.email = '';
+		state.name = '';
+		state.picture = '';
+		state.accessToken = '';
+	};
+
+	return { state, loadUser, clear };
 });
