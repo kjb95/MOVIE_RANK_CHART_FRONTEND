@@ -19,7 +19,7 @@
 <script setup>
 import { useUsersStore } from '@/store/users';
 import { useCookies } from 'vue3-cookies';
-import { AUTHENTICATION_DONE_COOKIE_KEY_NAME, OAUTH2_LOGIN_URL, REFRESH_TOKEN_COOKIE_KEY_NAME } from '@/constants/api';
+import { AUTHENTICATION_DONE_COOKIE_KEY_NAME, OAUTH2_LOGIN_URL } from '@/constants/api';
 import { nonLoginPhotoUrl } from '@/constants/path';
 
 const { cookies } = useCookies();

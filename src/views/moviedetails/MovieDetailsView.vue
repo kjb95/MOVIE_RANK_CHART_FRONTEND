@@ -2,11 +2,12 @@
 	<v-row>
 		<v-col cols="2"></v-col>
 		<v-col cols="2" align="center">
-			<v-img v-if="movieData.poster == ''" :src="noImgUrl" cover />
-			<v-img v-else :src="movieData.poster" cover />
+			<v-img v-if="movieData.poster == ''" :src="noImgUrl" height="350px" cover />
+			<v-img v-else :src="movieData.poster" height="350px" cover />
 			<v-btn class="mt-5 font-weight-bold" color="pink">채팅방 입장하기</v-btn>
 		</v-col>
 		<v-col class="ml-10">
+			<br />
 			<div class="font-weight-bold text-h4" v-text="movieData.title"></div>
 			<br />
 			<div v-if="movieData.openingDate != null" class="mt-2"><span class="font-weight-bold">개봉일: </span><span v-text="movieData.openingDate"></span></div>
@@ -18,6 +19,7 @@
 		</v-col>
 		<v-col cols="2"></v-col>
 	</v-row>
+	<BarCharts />
 </template>
 
 <script setup lang="ts">
@@ -25,6 +27,7 @@ import { findMoviesByIdApi } from '@/api/movies';
 import { useRoute } from 'vue-router';
 import { computed, reactive } from 'vue';
 import { noImgUrl } from '@/constants/path';
+import BarCharts from '@/components/moviedetails/BarCharts.vue';
 
 const route = useRoute();
 const moviesId = computed(() => route.path.split('/')[2]);
