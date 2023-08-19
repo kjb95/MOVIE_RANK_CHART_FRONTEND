@@ -15,3 +15,9 @@ export const findMovieRankLineChartApi = (startDate: String, endDate: String) =>
 		params: { startDate, endDate },
 	});
 };
+
+export const findMovieRankPieChartApi = (startDate: String, endDate: String) => {
+	return api.get(`/v1/movie-rank/pie-chart`, {
+		params: { startDate, endDate },
+	});
+};

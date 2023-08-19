@@ -2,7 +2,7 @@
 	<v-container>
 		<v-row>
 			<v-col />
-			<v-col>
+			<v-col cols="3">
 				<VueDatePicker
 					v-model="datePeriod"
 					:enable-time-picker="false"

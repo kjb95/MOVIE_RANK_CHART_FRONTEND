@@ -1,20 +1,22 @@
 <template>
-	<v-row justify="center" class="mt-8">
-		<v-tabs v-model="lineChartType" selected-class="text-pink">
-			<v-tab class="font-weight-bold text-h5" value="rank">순위</v-tab>
-			<v-tab class="font-weight-bold text-h5" value="sales">매출액</v-tab>
-			<v-tab class="font-weight-bold text-h5" value="audienceCount">관객수</v-tab>
-			<v-tab class="font-weight-bold text-h5" value="screeningsCount">상영한 스크린수</v-tab>
-			<v-tab class="font-weight-bold text-h5" value="theatersCount">상영된 횟수</v-tab>
-		</v-tabs>
-	</v-row>
-	<v-row>
-		<v-chart v-if="lineChartType === 'rank'" class="chart" :option="rankLineChartOption" @click="handleLineChartClick"></v-chart>
-		<v-chart v-if="lineChartType === 'sales'" class="chart" :option="salesLineChartOption" @click="handleLineChartClick"></v-chart>
-		<v-chart v-if="lineChartType === 'audienceCount'" class="chart" :option="audienceCountLineChartOption" @click="handleLineChartClick"></v-chart>
-		<v-chart v-if="lineChartType === 'screeningsCount'" class="chart" :option="screeningsCountLineChartOption" @click="handleLineChartClick"></v-chart>
-		<v-chart v-if="lineChartType === 'theatersCount'" class="chart" :option="theatersCountLineChartOption" @click="handleLineChartClick"></v-chart>
-	</v-row>
+	<v-container>
+		<v-row justify="center" class="mt-8">
+			<v-tabs v-model="lineChartType" selected-class="text-pink">
+				<v-tab class="font-weight-bold text-h5" value="rank">순위</v-tab>
+				<v-tab class="font-weight-bold text-h5" value="sales">매출액</v-tab>
+				<v-tab class="font-weight-bold text-h5" value="audienceCount">관객수</v-tab>
+				<v-tab class="font-weight-bold text-h5" value="screeningsCount">상영한 스크린수</v-tab>
+				<v-tab class="font-weight-bold text-h5" value="theatersCount">상영된 횟수</v-tab>
+			</v-tabs>
+		</v-row>
+		<v-row>
+			<v-chart v-if="lineChartType === 'rank'" class="chart" :option="rankLineChartOption" @click="handleLineChartClick"></v-chart>
+			<v-chart v-if="lineChartType === 'sales'" class="chart" :option="salesLineChartOption" @click="handleLineChartClick"></v-chart>
+			<v-chart v-if="lineChartType === 'audienceCount'" class="chart" :option="audienceCountLineChartOption" @click="handleLineChartClick"></v-chart>
+			<v-chart v-if="lineChartType === 'screeningsCount'" class="chart" :option="screeningsCountLineChartOption" @click="handleLineChartClick"></v-chart>
+			<v-chart v-if="lineChartType === 'theatersCount'" class="chart" :option="theatersCountLineChartOption" @click="handleLineChartClick"></v-chart>
+		</v-row>
+	</v-container>
 </template>
 
 <script setup lang="ts">
@@ -30,7 +32,7 @@ import { GraphicComponent, GridComponent, LegendComponent, TitleComponent } from
 use([LineChart, GridComponent, TitleComponent, GraphicComponent, LegendComponent]);
 
 const props = defineProps({
-	datePeriod: { type: Array, default: () => [getPreviousWeekdayDate(7), getPreviousWeekdayDate(1)] },
+	datePeriod: { type: Array, default: () => [getPreviousWeekdayDate(1), getPreviousWeekdayDate(0)] },
 });
 
 const lineChartType = ref('rank');
@@ -38,61 +40,67 @@ const handleLineChartClick = (params: any) => {
 	router.push(`/movie-details/${params.seriesId}`);
 };
 
+const findMovieRankLineChartApiSuccess = res => {
+	const dates = res.data.dates;
+	const titles = res.data.rank.map((rank: any) => rank.movieTitle);
+
+	rankLineChartOption.value = { ...rankLineChartOption.value };
+	rankLineChartOption.value.legend.data = titles;
+	rankLineChartOption.value.xAxis.data = dates;
+	rankLineChartOption.value.series = res.data.rank.map((data: any) => ({
+		name: data.movieTitle,
+		type: 'line',
+		lineStyle: { width: 10 },
+		data: data.datas.map((data: any) => (data === 0 ? null : -data + 11)),
+		id: data.moviesId,
+	}));
+
+	salesLineChartOption.value = { ...salesLineChartOption.value };
+	salesLineChartOption.value.legend.data = titles;
+	salesLineChartOption.value.xAxis.data = dates;
+	salesLineChartOption.value.series = res.data.sales.map((data: any) => ({
+		name: data.movieTitle,
+		type: 'line',
+		lineStyle: { width: 5 },
+		data: data.datas.map((data: any) => (data === 0 ? null : data / 100000000)),
+		id: data.moviesId,
+	}));
+
+	audienceCountLineChartOption.value = { ...audienceCountLineChartOption.value };
+	audienceCountLineChartOption.value.legend.data = titles;
+	audienceCountLineChartOption.value.xAxis.data = dates;
+	audienceCountLineChartOption.value.series = res.data.audienceCount.map((data: any) => ({
+		name: data.movieTitle,
+		type: 'line',
+		lineStyle: { width: 5 },
+		data: data.datas.map((data: any) => (data === 0 ? null : data / 10000)),
+		id: data.moviesId,
+	}));
+
+	salesLineChartOption.value = { ...salesLineChartOption.value };
+	screeningsCountLineChartOption.value.legend.data = titles;
+	screeningsCountLineChartOption.value.xAxis.data = dates;
+	screeningsCountLineChartOption.value.series = res.data.screeningsCount.map((data: any) => ({
+		name: data.movieTitle,
+		type: 'line',
+		lineStyle: { width: 5 },
+		data: data.datas.map((data: any) => (data === 0 ? null : data)),
+		id: data.moviesId,
+	}));
+
+	theatersCountLineChartOption.value.legend.data = titles;
+	theatersCountLineChartOption.value.xAxis.data = dates;
+	theatersCountLineChartOption.value.series = res.data.theatersCount.map((data: any) => ({
+		name: data.movieTitle,
+		type: 'line',
+		lineStyle: { width: 5 },
+		data: data.datas.map((data: any) => (data === 0 ? null : data)),
+		id: data.moviesId,
+	}));
+};
+
 watchEffect(() => {
-	findMovieRankLineChartApi(formatDate(props.datePeriod?.[0]), formatDate(props.datePeriod?.[1])).then(res => {
-		const dates = res.data.dates;
-		const titles = res.data.rank.map((rank: any) => rank.movieTitle);
-
-		rankLineChartOption.value.legend.data = titles;
-		rankLineChartOption.value.xAxis.data = dates;
-		rankLineChartOption.value.series = res.data.rank.map((data: any) => ({
-			name: data.movieTitle,
-			type: 'line',
-			lineStyle: { width: 10 },
-			data: data.datas.map((data: any) => (data === 0 ? null : -data + 11)),
-			id: data.moviesId,
-		}));
-
-		salesLineChartOption.value.legend.data = titles;
-		salesLineChartOption.value.xAxis.data = dates;
-		salesLineChartOption.value.series = res.data.sales.map((data: any) => ({
-			name: data.movieTitle,
-			type: 'line',
-			lineStyle: { width: 5 },
-			data: data.datas.map((data: any) => (data === 0 ? null : data / 100000000)),
-			id: data.moviesId,
-		}));
-
-		audienceCountLineChartOption.value.legend.data = titles;
-		audienceCountLineChartOption.value.xAxis.data = dates;
-		audienceCountLineChartOption.value.series = res.data.audienceCount.map((data: any) => ({
-			name: data.movieTitle,
-			type: 'line',
-			lineStyle: { width: 5 },
-			data: data.datas.map((data: any) => (data === 0 ? null : data / 10000)),
-			id: data.moviesId,
-		}));
-
-		screeningsCountLineChartOption.value.legend.data = titles;
-		screeningsCountLineChartOption.value.xAxis.data = dates;
-		screeningsCountLineChartOption.value.series = res.data.screeningsCount.map((data: any) => ({
-			name: data.movieTitle,
-			type: 'line',
-			lineStyle: { width: 5 },
-			data: data.datas.map((data: any) => (data === 0 ? null : data)),
-			id: data.moviesId,
-		}));
-
-		theatersCountLineChartOption.value.legend.data = titles;
-		theatersCountLineChartOption.value.xAxis.data = dates;
-		theatersCountLineChartOption.value.series = res.data.theatersCount.map((data: any) => ({
-			name: data.movieTitle,
-			type: 'line',
-			lineStyle: { width: 5 },
-			data: data.datas.map((data: any) => (data === 0 ? null : data)),
-			id: data.moviesId,
-		}));
-	});
+	findMovieRankLineChartApi(formatDate(props.datePeriod?.[0]), formatDate(props.datePeriod?.[1])).then(findMovieRankLineChartApiSuccess);
 });
 
 const rankLineChartOption = ref({
@@ -350,6 +358,6 @@ const theatersCountLineChartOption = ref({
 </script>
 <style scoped>
 .chart {
-	height: 100vh;
+	height: 90vh;
 }
 </style>
