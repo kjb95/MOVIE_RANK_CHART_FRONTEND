@@ -6,11 +6,10 @@ import ChatView from '../views/chat/ChatView.vue';
 import RankView from '@/views/rank/RankView.vue';
 import TheStatisticsHeader from '@/layouts/header/TheStatisticsHeader.vue';
 import TheRankHeader from '@/layouts/header/TheRankHeader.vue';
-import LineChartView from '@/views/statistics/LineChartView.vue';
-import PieChartView from '@/views/statistics/PieChartView.vue';
 import TheBasicHeader from '@/layouts/header/TheBasicHeader.vue';
 import MovieDetailsSearchView from '@/views/moviedetails/MovieDetailsSearchView.vue';
 import MovieDetailsView from '@/views/moviedetails/MovieDetailsView.vue';
+import StatisticsView from '@/views/statistics/StatisticsView.vue';
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -52,12 +51,12 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/statistics/line-chart',
 		name: 'lineChart',
-		components: { default: LineChartView, header: TheStatisticsHeader },
+		components: { default: StatisticsView, header: TheStatisticsHeader },
 	},
 	{
 		path: '/statistics/pie-chart',
 		name: 'pieChart',
-		components: { default: PieChartView, header: TheStatisticsHeader },
+		components: { default: StatisticsView, header: TheStatisticsHeader },
 	},
 
 	{ path: '/chat', name: 'chat', components: { default: ChatView, header: TheBasicHeader } },

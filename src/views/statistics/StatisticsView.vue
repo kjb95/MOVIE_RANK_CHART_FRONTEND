@@ -14,20 +14,30 @@
 			</v-col>
 			<v-col />
 		</v-row>
-		<LineCharts :datePeriod="datePeriod" />
+		<LineCharts v-if="path == '/statistics/line-chart'" :datePeriod="datePeriod" />
+		<PieCharts v-if="path == '/statistics/pie-chart'" :datePeriod="datePeriod" />
 	</v-container>
 </template>
 
 <script setup lang="ts">
 import { useMovieRankDataRangeStore } from '@/store/movieRankDataRange';
 import { getPreviousWeekdayDate } from '@/utils/dateUtils';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
+import PieCharts from '@/components/statistics/PieCharts.vue';
 import LineCharts from '@/components/statistics/LineCharts.vue';
 
 const movieRankDataRange = useMovieRankDataRangeStore();
+const route = useRoute();
+
+const path = ref(route.path);
 const datePeriod = ref([getPreviousWeekdayDate(1), getPreviousWeekdayDate(0)]);
 
 movieRankDataRange.findMovieDataRange();
+
+watchEffect(() => {
+	path.value = route.path;
+});
 </script>
 <style scoped>
 .vueDatePickerClass {
