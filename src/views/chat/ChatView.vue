@@ -1,5 +1,5 @@
 <template>
-	<div>Chat View</div>
+	<v-container> Chat View </v-container>
 </template>
 
 <script setup lang="ts"></script>

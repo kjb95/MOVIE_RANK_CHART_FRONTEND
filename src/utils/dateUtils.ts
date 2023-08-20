@@ -1,9 +1,11 @@
-// weekday: 0 = Sunday, 1 = Monday, etc.
-export const getPreviousWeekdayDate = (weekday: number): Date => {
+export const getPreviousWeekSunday = (): Date => {
 	const date = new Date();
-	const diff = weekday !== 0 ? ((date.getDay() - weekday + 7) % 7) + 7 : (date.getDay() - weekday + 7) % 7;
-	date.setDate(date.getDate() - diff);
-	return date;
+	const day = date.getDay() == 0 ? 7 : date.getDay();
+	return new Date(date.setDate(date.getDate() - day));
+};
+
+export const getPreviousWeekMonday = (): Date => {
+	return new Date(getPreviousWeekSunday().setDate(getPreviousWeekSunday().getDate() - 6));
 };
 
 export const getYesterday = (): Date => {

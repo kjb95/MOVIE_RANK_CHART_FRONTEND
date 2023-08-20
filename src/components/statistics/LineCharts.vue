@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<v-row justify="center" class="mt-8">
+		<v-row justify="center" class="mt-3">
 			<v-tabs v-model="lineChartType" selected-class="text-pink">
 				<v-tab class="font-weight-bold text-h5" value="rank">순위</v-tab>
 				<v-tab class="font-weight-bold text-h5" value="sales">매출액</v-tab>
@@ -23,7 +23,7 @@
 import VChart from 'vue-echarts';
 import router from '@/plugins';
 import { ref, watchEffect } from 'vue';
-import { formatDate, getPreviousWeekdayDate } from '@/utils/dateUtils';
+import { formatDate, getPreviousWeekMonday, getPreviousWeekSunday } from '@/utils/dateUtils';
 import { findMovieRankLineChartApi } from '@/api/movieRank';
 import { use } from 'echarts/core';
 import { LineChart } from 'echarts/charts';
@@ -32,7 +32,7 @@ import { GraphicComponent, GridComponent, LegendComponent, TitleComponent } from
 use([LineChart, GridComponent, TitleComponent, GraphicComponent, LegendComponent]);
 
 const props = defineProps({
-	datePeriod: { type: Array, default: () => [getPreviousWeekdayDate(1), getPreviousWeekdayDate(0)] },
+	datePeriod: { type: Array, default: () => [getPreviousWeekMonday(), getPreviousWeekSunday()] },
 });
 
 const lineChartType = ref('rank');
@@ -107,7 +107,7 @@ const rankLineChartOption = ref({
 	legend: {
 		data: [],
 		top: 'bottom',
-		itemWidth: 10,
+		itemWidth: 5,
 		itemHeight: 10,
 	},
 	tooltip: {
@@ -358,6 +358,6 @@ const theatersCountLineChartOption = ref({
 </script>
 <style scoped>
 .chart {
-	height: 90vh;
+	height: 70vh;
 }
 </style>

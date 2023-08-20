@@ -15,15 +15,20 @@
 			</v-tabs>
 		</v-row>
 	</div>
-	<v-tab to="/chat" class="font-weight-bold text-h4">채팅</v-tab>
+	<v-tab v-if="user.isLogin" to="/chat" class="font-weight-bold text-h4" value="/chat">채팅</v-tab>
+	<v-tab v-else class="font-weight-bold text-h4" @click.stop.capture="openOauthWindow('/chat')">채팅</v-tab>
 	<v-tab to="/movie-details" class="font-weight-bold text-h4">영화상세</v-tab>
 </template>
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { ref, watchEffect } from 'vue';
+import { openOauthWindow } from '@/service/login';
+import { useUsersStore } from '@/store/users';
 
 const route = useRoute();
+const user = useUsersStore();
+
 const path = ref(route.path);
 watchEffect(() => (path.value = route.path));
 </script>

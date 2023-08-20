@@ -352,6 +352,6 @@ const theatersCountBarChartOption = ref({
 
 <style scoped>
 .chart {
-	height: 85vh;
+	height: 70vh;
 }
 </style>

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { findUserApi } from '@/api/users';
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import { createAccessTokenApi } from '@/api/refreshToken';
 
 export const useUsersStore = defineStore('users', () => {
@@ -34,5 +34,7 @@ export const useUsersStore = defineStore('users', () => {
 		state.accessToken = '';
 	};
 
-	return { state, loadUser, clear };
+	const isLogin = computed(() => state.accessToken != '');
+
+	return { state, loadUser, clear, isLogin };
 });

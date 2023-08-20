@@ -21,17 +21,17 @@
 
 <script setup lang="ts">
 import { useMovieRankDataRangeStore } from '@/store/movieRankDataRange';
-import { getPreviousWeekdayDate } from '@/utils/dateUtils';
 import { ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import PieCharts from '@/components/statistics/PieCharts.vue';
 import LineCharts from '@/components/statistics/LineCharts.vue';
+import { getPreviousWeekMonday, getPreviousWeekSunday } from '@/utils/dateUtils';
 
 const movieRankDataRange = useMovieRankDataRangeStore();
 const route = useRoute();
 
 const path = ref(route.path);
-const datePeriod = ref([getPreviousWeekdayDate(1), getPreviousWeekdayDate(0)]);
+const datePeriod = ref([getPreviousWeekMonday(), getPreviousWeekSunday()]);
 
 movieRankDataRange.findMovieDataRange();
 

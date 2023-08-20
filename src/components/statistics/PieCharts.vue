@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<v-row justify="center" class="mt-8">
+		<v-row justify="center" class="mt-3">
 			<v-tabs v-model="pieChartType" selected-class="text-pink">
 				<v-tab class="font-weight-bold text-h5" value="sales">매출액</v-tab>
 				<v-tab class="font-weight-bold text-h5" value="audienceCount">관객수</v-tab>
@@ -24,12 +24,12 @@ import { PieChart } from 'echarts/charts';
 import { use } from 'echarts/core';
 import router from '@/plugins';
 import { findMovieRankPieChartApi } from '@/api/movieRank';
-import { formatDate, getPreviousWeekdayDate } from '@/utils/dateUtils';
+import { formatDate, getPreviousWeekMonday, getPreviousWeekSunday } from '@/utils/dateUtils';
 
 use([PieChart, GridComponent, TitleComponent, GraphicComponent, LegendComponent]);
 
 const props = defineProps({
-	datePeriod: { type: Array, default: () => [getPreviousWeekdayDate(1), getPreviousWeekdayDate(0)] },
+	datePeriod: { type: Array, default: () => [getPreviousWeekMonday(), getPreviousWeekSunday()] },
 });
 
 const pieChartType = ref('rank');
@@ -152,6 +152,6 @@ const theatersCountPieChartOption = ref({
 </script>
 <style scoped>
 .chart {
-	height: 90vh;
+	height: 70vh;
 }
 </style>

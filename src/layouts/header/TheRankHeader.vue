@@ -18,13 +18,16 @@
 		</v-row>
 	</div>
 	<v-tab to="/statistics/line-chart" class="font-weight-bold text-h4">통계</v-tab>
-	<v-tab to="/chat" class="font-weight-bold text-h4">채팅</v-tab>
+	<v-tab v-if="user.isLogin" to="/chat" class="font-weight-bold text-h4" value="/chat">채팅</v-tab>
+	<v-tab v-else class="font-weight-bold text-h4" @click.stop.capture="openOauthWindow('/chat')">채팅</v-tab>
 	<v-tab to="/movie-details" class="font-weight-bold text-h4">영화상세</v-tab>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
+import { useUsersStore } from '@/store/users';
+import { openOauthWindow } from '@/service/login';
 
 defineProps({
 	periodType: { Type: String, default: 'daily' },
@@ -32,6 +35,7 @@ defineProps({
 
 const route = useRoute();
 const path = ref(route.path);
+const user = useUsersStore();
 watchEffect(() => (path.value = route.path));
 </script>
 

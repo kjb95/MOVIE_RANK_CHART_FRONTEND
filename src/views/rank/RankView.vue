@@ -71,7 +71,7 @@ import { computed, ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import { findMovieRankApi } from '@/api/movieRank';
 import MovieInfoCard from '@/components/rank/MovieInfoCard.vue';
-import { getPreviousWeekdayDate, getYesterday } from '@/utils/dateUtils';
+import { getPreviousWeekMonday, getPreviousWeekSunday, getYesterday } from '@/utils/dateUtils';
 import { useMovieRankDataRangeStore } from '@/store/movieRankDataRange';
 
 const route = useRoute();
@@ -79,7 +79,7 @@ const route = useRoute();
 const movieRankDataRange = useMovieRankDataRangeStore();
 
 const dailyDate = ref(getYesterday());
-const weeklyDate = ref([getPreviousWeekdayDate(1), getPreviousWeekdayDate(0)]);
+const weeklyDate = ref([getPreviousWeekMonday(), getPreviousWeekSunday()]);
 const movieRankData = ref([]);
 const path = ref(route.path);
 

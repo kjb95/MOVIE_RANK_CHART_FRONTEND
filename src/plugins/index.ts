@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 import type { Router, RouteRecordRaw } from 'vue-router';
 
@@ -12,6 +12,11 @@ import MovieDetailsView from '@/views/moviedetails/MovieDetailsView.vue';
 import StatisticsView from '@/views/statistics/StatisticsView.vue';
 
 const routes: Array<RouteRecordRaw> = [
+	{
+		path: '/',
+		name: 'home',
+		redirect: '/rank/total/daily',
+	},
 	{
 		path: '/rank/total/daily',
 		name: 'totalDailyRank',

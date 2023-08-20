@@ -13,7 +13,12 @@ import { deleteRefreshTokenApi } from '@/api/refreshToken';
 const user = useUsersStore();
 
 const logout = () => {
-	deleteRefreshTokenApi().then(() => user.clear());
+	deleteRefreshTokenApi().then(deleteRefreshTokenApiSuccess);
+};
+
+const deleteRefreshTokenApiSuccess = () => {
+	user.clear();
+	window.location.href = '/';
 };
 </script>
 <style scoped></style>
