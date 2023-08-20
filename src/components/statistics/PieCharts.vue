@@ -25,6 +25,7 @@ import { use } from 'echarts/core';
 import router from '@/plugins';
 import { findMovieRankPieChartApi } from '@/api/movieRank';
 import { formatDate, getPreviousWeekMonday, getPreviousWeekSunday } from '@/utils/dateUtils';
+import { audienceCountPieChartOption, salesPieChartOption, screeningsCountPieChartOption, theatersCountPieChartOption } from '@/service/echartsoption/pieChartsOption';
 
 use([PieChart, GridComponent, TitleComponent, GraphicComponent, LegendComponent]);
 
@@ -52,102 +53,6 @@ const findMovieRankPieChartApiSuccess = res => {
 
 watchEffect(() => {
 	findMovieRankPieChartApi(formatDate(props.datePeriod?.[0]), formatDate(props.datePeriod?.[1])).then(findMovieRankPieChartApiSuccess);
-});
-
-const salesPieChartOption = ref({
-	tooltip: {
-		trigger: 'item',
-		formatter: function (params) {
-			return `<span style='color: ${params.color}' class='font-weight-bold'>${params.name} <br/>${(params.value / 100000000).toFixed(2)}억원 (${params.percent}%)</span>`;
-		},
-	},
-	label: {
-		fontSize: 15,
-		fontWeight: 'bold',
-	},
-	series: [
-		{
-			type: 'pie',
-			data: [],
-			emphasis: {
-				itemStyle: {
-					shadowBlur: 100,
-				},
-			},
-		},
-	],
-});
-
-const audienceCountPieChartOption = ref({
-	tooltip: {
-		trigger: 'item',
-		formatter: function (params) {
-			return `<span style='color: ${params.color}' class='font-weight-bold'>${params.name} <br/>${params.value / 10000}만명 (${params.percent}%)</span>`;
-		},
-	},
-	label: {
-		fontSize: 15,
-		fontWeight: 'bold',
-	},
-	series: [
-		{
-			type: 'pie',
-			data: [],
-			emphasis: {
-				itemStyle: {
-					shadowBlur: 100,
-				},
-			},
-		},
-	],
-});
-
-const screeningsCountPieChartOption = ref({
-	tooltip: {
-		trigger: 'item',
-		formatter: function (params) {
-			return `<span style='color: ${params.color}' class='font-weight-bold'>${params.name} <br/>${params.value}개 (${params.percent}%)</span>`;
-		},
-	},
-	label: {
-		fontSize: 15,
-		fontWeight: 'bold',
-	},
-	series: [
-		{
-			type: 'pie',
-			data: [],
-			emphasis: {
-				itemStyle: {
-					shadowBlur: 100,
-				},
-			},
-		},
-	],
-});
-
-const theatersCountPieChartOption = ref({
-	tooltip: {
-		trigger: 'item',
-		formatter: function (params) {
-			return `<span style='color: ${params.color}' class='font-weight-bold'>${params.name} <br/>${params.value}번 (${params.percent}%)</span>`;
-		},
-	},
-	label: {
-		fontSize: 15,
-		fontWeight: 'bold',
-	},
-	series: [
-		{
-			type: 'pie',
-			data: [],
-			emphasis: {
-				itemStyle: {
-					shadowBlur: 100,
-				},
-			},
-		},
-	],
 });
 </script>
 <style scoped>
