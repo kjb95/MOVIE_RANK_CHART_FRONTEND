@@ -2,37 +2,21 @@
 	<v-container v-if="movieTitleSearchResult.length == 0">
 		<LoadingSpinner />
 	</v-container>
-	<v-row v-else>
-		<v-col cols="2"></v-col>
-		<v-col>
-			<v-autocomplete
-				v-model="movie"
-				:items="movieTitleSearchResult"
-				item-value="moviesId"
-				placeholder="영화명 검색"
-				no-data-text="검색 결과가 없습니다."
-				auto-select-first
-				prepend-inner-icon="mdi-magnify"
-				rounded
-				variant="solo"
-			></v-autocomplete>
-		</v-col>
-		<v-col cols="2"></v-col>
-	</v-row>
+	<SearchBox v-else searchBoxPlaceHolder="영화명 검색" :movie-title-search-result="movieTitleSearchResult" @search="search" />
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { findMoviesByTitleApi } from '@/api/movies';
+import { ref } from 'vue';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
+import SearchBox from '@/components/common/SearchBox.vue';
+import { findMoviesByTitleApi } from '@/api/movies';
 import router from '@/plugins';
 
-const movie = ref();
 const movieTitleSearchResult = ref([]);
 
 findMoviesByTitleApi('', false).then(res => (movieTitleSearchResult.value = res.data.movies));
 
-watch(movie, () => router.push('/movie-details/' + movie.value));
+const search = moviesId => router.push(`/movie-details/${moviesId}`);
 </script>
 
 <style scoped></style>

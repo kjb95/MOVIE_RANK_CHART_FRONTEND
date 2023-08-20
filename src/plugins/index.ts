@@ -10,6 +10,7 @@ import TheBasicHeader from '@/layouts/header/TheBasicHeader.vue';
 import MovieDetailsSearchView from '@/views/moviedetails/MovieDetailsSearchView.vue';
 import MovieDetailsView from '@/views/moviedetails/MovieDetailsView.vue';
 import StatisticsView from '@/views/statistics/StatisticsView.vue';
+import ChatRoomView from '@/views/chat/ChatRoomView.vue';
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -65,6 +66,7 @@ const routes: Array<RouteRecordRaw> = [
 	},
 
 	{ path: '/chat', name: 'chat', components: { default: ChatView, header: TheBasicHeader } },
+	{ path: '/chat/:id', name: 'chatRoom', components: { default: ChatRoomView, header: TheBasicHeader } },
 	{
 		path: '/movie-details',
 		name: 'movieDetailsSearch',
