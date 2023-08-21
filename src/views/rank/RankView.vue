@@ -7,7 +7,6 @@
 				v-if="periodType == 'daily'"
 				v-model="dailyDate"
 				:enable-time-picker="false"
-				class="vueDatePickerClass"
 				:min-date="movieRankDataRange.state.startDate"
 				:max-date="movieRankDataRange.state.endDateDaily"
 			></VueDatePicker>
@@ -33,7 +32,7 @@
 		</v-col>
 	</v-row>
 	<v-row v-if="movieRankData.length != 0">
-		<v-col cols="2"></v-col>
+		<v-col lg="2" xl="3"></v-col>
 		<v-col v-for="n in 5" :key="n" style="margin-left: -40px">
 			<MovieInfoCard
 				:movies-id="movieRankData[n - 1].moviesId"
@@ -46,10 +45,10 @@
 				:audience-count="movieRankData[n - 1].audienceCount"
 			/>
 		</v-col>
-		<v-col cols="2"></v-col>
+		<v-col lg="2" xl="3"></v-col>
 	</v-row>
 	<v-row v-if="movieRankData.length != 0">
-		<v-col cols="2"></v-col>
+		<v-col lg="2" xl="3"></v-col>
 		<v-col v-for="n in 5" :key="n" style="margin-left: -40px">
 			<MovieInfoCard
 				:movies-id="movieRankData[n + 4].moviesId"
@@ -62,7 +61,7 @@
 				:audience-count="movieRankData[n + 4].audienceCount"
 			/>
 		</v-col>
-		<v-col cols="2"></v-col>
+		<v-col lg="2" xl="3"></v-col>
 	</v-row>
 </template>
 
@@ -105,8 +104,4 @@ const weeklyRankPath = computed(() => pathWithoutPeriodType.value + '/weekly');
 watchEffect(findMovieRank);
 </script>
 
-<style scoped>
-.vueDatePickerClass {
-	width: 250px;
-}
-</style>
+<style scoped></style>

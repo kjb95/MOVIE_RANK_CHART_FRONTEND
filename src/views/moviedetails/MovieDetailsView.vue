@@ -1,9 +1,9 @@
 <template>
 	<v-row>
-		<v-col cols="2"></v-col>
+		<v-col cols="3"></v-col>
 		<v-col cols="2" align="center">
-			<v-img v-if="movieData.poster == ''" :src="noImgUrl" height="350px" cover />
-			<v-img v-else :src="movieData.poster" height="350px" cover />
+			<v-img v-if="movieData.poster == ''" :src="noImgUrl" cover />
+			<v-img v-else :src="movieData.poster" cover />
 			<v-btn class="mt-5 font-weight-bold" color="pink">채팅방 입장하기</v-btn>
 		</v-col>
 		<v-col class="ml-10">
@@ -17,9 +17,9 @@
 			<div v-if="movieData.runtime != ''" class="mt-2"><span class="font-weight-bold">상영시간: </span><span v-text="movieData.runtime"></span>분</div>
 			<div v-if="movieData.ratingGrade != ''" class="mt-2"><span class="font-weight-bold">관람등급: </span><span v-text="movieData.ratingGrade"></span></div>
 		</v-col>
-		<v-col cols="2"></v-col>
+		<v-col cols="3"></v-col>
 	</v-row>
-	<BarCharts />
+	<BarCharts class="mt-5" />
 </template>
 
 <script setup lang="ts">

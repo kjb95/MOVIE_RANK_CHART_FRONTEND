@@ -89,6 +89,7 @@ const findMovieRankLineChartApiSuccess = res => {
 		id: data.moviesId,
 	}));
 
+	theatersCountLineChartOption.value = { ...theatersCountLineChartOption.value };
 	theatersCountLineChartOption.value.legend.data = titles;
 	theatersCountLineChartOption.value.xAxis.data = dates;
 	theatersCountLineChartOption.value.series = res.data.theatersCount.map((data: any) => ({

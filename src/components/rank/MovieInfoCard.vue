@@ -14,8 +14,8 @@
 			</v-row>
 			<v-row style="margin-top: -20px">
 				<v-col>
-					<v-img v-if="poster == ''" :src="noImgUrl" height="250px" cover />
-					<v-img v-else :src="poster" height="250px" cover />
+					<v-img v-if="poster == ''" :src="noImgUrl" height="280px" width="170px" cover />
+					<v-img v-else :src="poster" height="280px" width="170px" cover />
 				</v-col>
 			</v-row>
 			<v-row style="margin-top: -10px">

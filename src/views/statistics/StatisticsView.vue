@@ -3,14 +3,7 @@
 		<v-row>
 			<v-col />
 			<v-col cols="3">
-				<VueDatePicker
-					v-model="datePeriod"
-					:enable-time-picker="false"
-					class="vueDatePickerClass"
-					:min-date="movieRankDataRange.state.startDate"
-					:max-date="movieRankDataRange.state.endDateDaily"
-					week-picker
-				></VueDatePicker>
+				<VueDatePicker v-model="datePeriod" :enable-time-picker="false" :min-date="movieRankDataRange.state.startDate" :max-date="movieRankDataRange.state.endDateDaily" week-picker></VueDatePicker>
 			</v-col>
 			<v-col />
 		</v-row>
@@ -39,8 +32,4 @@ watchEffect(() => {
 	path.value = route.path;
 });
 </script>
-<style scoped>
-.vueDatePickerClass {
-	width: 250px;
-}
-</style>
+<style scoped></style>
