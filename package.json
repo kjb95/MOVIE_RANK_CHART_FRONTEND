@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
     "@vuepic/vue-datepicker": "^5.4.0",
     "axios": "^1.4.0",
     "echarts": "^5.4.3",
@@ -21,7 +22,10 @@
     "vue-echarts": "^6.6.1",
     "vue-router": "^4.0.13",
     "vue3-cookies": "^1.0.6",
-    "vuetify": "^3.3.10"
+    "vue3-websocket": "^1.0.11",
+    "vuetify": "^3.3.10",
+    "webstomp-client": "^1.2.6",
+    "ws": "^8.13.0"
   },
   "devDependencies": {
     "@mdi/font": "^7.2.96",

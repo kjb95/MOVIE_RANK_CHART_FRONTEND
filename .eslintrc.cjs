@@ -21,7 +21,7 @@ module.exports = {
 				useTabs: true,
 				tabWidth: 2,
 				trailingComma: 'all',
-				printWidth: 200,
+				printWidth: 400,
 				bracketSpacing: true,
 				arrowParens: 'avoid',
 				endOfLine: 'auto', // 한줄 추가

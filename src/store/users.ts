@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 import { findUserApi } from '@/api/users';
 import { computed, reactive } from 'vue';
 import { createAccessTokenApi } from '@/api/refreshToken';
-
 export const useUsersStore = defineStore('users', () => {
 	const state = reactive({ id: '', email: '', name: '', picture: '', accessToken: '' });
 
@@ -13,6 +12,7 @@ export const useUsersStore = defineStore('users', () => {
 	const createAccessTokenApiSuccess = (data: any) => {
 		// 리프레시 토큰이 유효하지 않은 경우
 		if (data == '') {
+			clear();
 			return;
 		}
 		state.accessToken = data.accessToken;
@@ -34,7 +34,7 @@ export const useUsersStore = defineStore('users', () => {
 		state.accessToken = '';
 	};
 
-	const isLogin = computed(() => state.accessToken != '');
+	const isLogin = computed(() => state.accessToken != '' && state.id != '');
 
 	return { state, loadUser, clear, isLogin };
 });

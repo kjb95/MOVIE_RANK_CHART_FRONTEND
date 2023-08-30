@@ -1,7 +1,8 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios';
 
-import { AUTHORIZATION_HEADER_NAME, BACKEND_BASE_URL, BEARER } from '@/constants/api';
+import { AUTHORIZATION_HEADER_NAME, BEARER } from '@/constants/api';
 import { useUsersStore } from '@/store/users';
+import { BACKEND_BASE_URL } from '@/constants/path';
 
 axios.defaults.baseURL = BACKEND_BASE_URL;
 axios.defaults.withCredentials = true;
@@ -13,3 +14,15 @@ const addToken = (config: InternalAxiosRequestConfig<any>) => {
 };
 
 api.interceptors.request.use(addToken);
+
+api.interceptors.response.use(
+	response => response,
+	error => {
+		if (error.response.status !== 401) {
+			return Promise.reject(error);
+		}
+		const user = useUsersStore();
+		user.clear();
+		user.loadUser();
+	},
+);

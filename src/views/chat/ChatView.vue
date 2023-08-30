@@ -8,14 +8,23 @@
 <script setup lang="ts">
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import { findMoviesByTitleApi } from '@/api/movies';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import SearchBox from '@/components/common/SearchBox.vue';
+import { useUsersStore } from '@/store/users';
 import router from '@/plugins';
 
+const user = useUsersStore();
+const search = (moviesId: String) => router.push(`/chat/${moviesId}`);
 const movieTitleSearchResult = ref([]);
 
-findMoviesByTitleApi('', false).then(res => (movieTitleSearchResult.value = res.data.movies));
-const search = moviesId => router.push(`/chat/${moviesId}`);
+if (!user.isLogin) {
+	router.push('/');
+}
+
+onMounted(async () => {
+	const res = await findMoviesByTitleApi('', false);
+	movieTitleSearchResult.value = res.data.movies;
+});
 </script>
 
 <style scoped></style>
