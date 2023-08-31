@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import SearchBox from '@/components/common/SearchBox.vue';
 import { findMoviesByTitleApi } from '@/api/movies';
@@ -14,9 +14,12 @@ import router from '@/plugins';
 
 const movieTitleSearchResult = ref([]);
 
-findMoviesByTitleApi('', false).then(res => (movieTitleSearchResult.value = res.data.movies));
+onMounted(async () => {
+	const res = await findMoviesByTitleApi('', false);
+	movieTitleSearchResult.value = res.data.movies;
+});
 
-const search = moviesId => router.push(`/movie-details/${moviesId}`);
+const search = (moviesId: String) => router.push(`/movie-details/${moviesId}`);
 </script>
 
 <style scoped></style>

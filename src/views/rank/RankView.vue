@@ -3,21 +3,8 @@
 		<v-col />
 		<v-col />
 		<v-col>
-			<VueDatePicker
-				v-if="periodType == 'daily'"
-				v-model="dailyDate"
-				:enable-time-picker="false"
-				:min-date="movieRankDataRange.state.startDate"
-				:max-date="movieRankDataRange.state.endDateDaily"
-			></VueDatePicker>
-			<VueDatePicker
-				v-if="periodType == 'weekly'"
-				v-model="weeklyDate"
-				class="vueDatePickerClass"
-				week-picker
-				:min-date="movieRankDataRange.state.startDate"
-				:max-date="movieRankDataRange.state.endDateDaily"
-			></VueDatePicker>
+			<VueDatePicker v-if="periodType == 'daily'" v-model="dailyDate" :enable-time-picker="false" :min-date="movieRankDataRange.state.startDate" :max-date="movieRankDataRange.state.endDateDaily"></VueDatePicker>
+			<VueDatePicker v-if="periodType == 'weekly'" v-model="weeklyDate" class="vueDatePickerClass" week-picker :min-date="movieRankDataRange.state.startDate" :max-date="movieRankDataRange.state.endDateDaily"></VueDatePicker>
 		</v-col>
 		<v-col></v-col>
 		<v-col>
@@ -34,32 +21,14 @@
 	<v-row v-if="movieRankData.length != 0">
 		<v-col lg="2" xl="3"></v-col>
 		<v-col v-for="n in 5" :key="n" style="margin-left: -40px">
-			<MovieInfoCard
-				:movies-id="movieRankData[n - 1].moviesId"
-				:title="movieRankData[n - 1].title"
-				:rank-increment="movieRankData[n - 1].rankIncrement"
-				:rank="movieRankData[n - 1].rank"
-				:poster="movieRankData[n - 1].poster"
-				:opening-date="movieRankData[n - 1].openingDate"
-				:new-rank="movieRankData[n - 1].newRank"
-				:audience-count="movieRankData[n - 1].audienceCount"
-			/>
+			<MovieInfoCard :movies-id="movieRankData[n - 1].moviesId" :title="movieRankData[n - 1].title" :rank-increment="movieRankData[n - 1].rankIncrement" :rank="movieRankData[n - 1].rank" :poster="movieRankData[n - 1].poster" :opening-date="movieRankData[n - 1].openingDate" :new-rank="movieRankData[n - 1].newRank" :audience-count="movieRankData[n - 1].audienceCount" />
 		</v-col>
 		<v-col lg="2" xl="3"></v-col>
 	</v-row>
 	<v-row v-if="movieRankData.length != 0">
 		<v-col lg="2" xl="3"></v-col>
 		<v-col v-for="n in 5" :key="n" style="margin-left: -40px">
-			<MovieInfoCard
-				:movies-id="movieRankData[n + 4].moviesId"
-				:title="movieRankData[n + 4].title"
-				:rank-increment="movieRankData[n + 4].rankIncrement"
-				:rank="movieRankData[n + 4].rank"
-				:poster="movieRankData[n + 4].poster"
-				:opening-date="movieRankData[n + 4].openingDate"
-				:new-rank="movieRankData[n + 4].newRank"
-				:audience-count="movieRankData[n + 4].audienceCount"
-			/>
+			<MovieInfoCard :movies-id="movieRankData[n + 4].moviesId" :title="movieRankData[n + 4].title" :rank-increment="movieRankData[n + 4].rankIncrement" :rank="movieRankData[n + 4].rank" :poster="movieRankData[n + 4].poster" :opening-date="movieRankData[n + 4].openingDate" :new-rank="movieRankData[n + 4].newRank" :audience-count="movieRankData[n + 4].audienceCount" />
 		</v-col>
 		<v-col lg="2" xl="3"></v-col>
 	</v-row>
@@ -73,25 +42,37 @@ import MovieInfoCard from '@/components/rank/MovieInfoCard.vue';
 import { getPreviousWeekMonday, getPreviousWeekSunday, getYesterday } from '@/utils/dateUtils';
 import { useMovieRankDataRangeStore } from '@/store/movieRankDataRange';
 
+interface MovieRankData {
+	moviesId: number;
+	title: string;
+	rankIncrement: number;
+	rank: number;
+	poster: string;
+	openingDate: string;
+	newRank: number;
+	audienceCount: number;
+}
+
 const route = useRoute();
 
 const movieRankDataRange = useMovieRankDataRangeStore();
 
 const dailyDate = ref(getYesterday());
 const weeklyDate = ref([getPreviousWeekMonday(), getPreviousWeekSunday()]);
-const movieRankData = ref([]);
+const movieRankData = ref<MovieRankData[]>([]);
 const path = ref(route.path);
 
 const computeFormattedDate = () => {
 	const date = periodType.value === 'daily' ? dailyDate.value : weeklyDate?.value[0];
 	return String(date?.getFullYear()).padStart(2, '0') + String(date?.getMonth() + 1).padStart(2, '0') + String(date?.getDate()).padStart(2, '0');
 };
-const findMovieRank = () => {
+const findMovieRank = async () => {
 	path.value = route.path;
 	if (movieRankDataRange.state.startDate === '') {
 		movieRankDataRange.findMovieDataRange();
 	}
-	findMovieRankApi(formattedDate.value, formattedMovieRankType.value).then(res => (movieRankData.value = res.data.findMovieRankTopTenResponseDtos));
+	const res = await findMovieRankApi(formattedDate.value, formattedMovieRankType.value);
+	movieRankData.value = res.data.findMovieRankTopTenResponseDtos;
 };
 
 const periodType = computed(() => path.value.split('/')[3]);

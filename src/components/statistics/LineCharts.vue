@@ -41,7 +41,8 @@ const handleLineChartClick = (params: any) => {
 	router.push(`/movie-details/${params.seriesId}`);
 };
 
-const findMovieRankLineChartApiSuccess = res => {
+watchEffect(async () => {
+	const res = await findMovieRankLineChartApi(formatDate(props.datePeriod?.[0] as Date), formatDate(props.datePeriod?.[1] as Date));
 	const dates = res.data.dates;
 	const titles = res.data.rank.map((rank: any) => rank.movieTitle);
 
@@ -99,10 +100,6 @@ const findMovieRankLineChartApiSuccess = res => {
 		data: data.datas.map((data: any) => (data === 0 ? null : data)),
 		id: data.moviesId,
 	}));
-};
-
-watchEffect(() => {
-	findMovieRankLineChartApi(formatDate(props.datePeriod?.[0]), formatDate(props.datePeriod?.[1])).then(findMovieRankLineChartApiSuccess);
 });
 </script>
 <style scoped>

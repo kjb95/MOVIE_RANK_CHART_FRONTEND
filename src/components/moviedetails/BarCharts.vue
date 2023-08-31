@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { findMovieRankBarChartApi } from '@/api/movieRank';
 import { use } from 'echarts/core';
 import { BarChart } from 'echarts/charts';
@@ -36,23 +36,24 @@ const moviesId = computed(() => route.path.split('/')[2]);
 
 const barChartType = ref('rank');
 
-findMovieRankBarChartApi(moviesId.value).then(res => {
+onMounted(async () => {
+	const res = await findMovieRankBarChartApi(moviesId.value);
 	if (res.data.dates == null) {
 		barChartType.value = '';
 		return;
 	}
-	const nonZeroDataIndices = res.data.rank[0].datas.map((data, index) => (data !== 0 ? index : -1)).filter(index => index !== -1);
-	const dates = nonZeroDataIndices.map(index => res.data.dates[index]);
+	const nonZeroDataIndices = res.data.rank[0].datas.map((data: any, index: number) => (data !== 0 ? index : -1)).filter((index: number) => index !== -1);
+	const dates = nonZeroDataIndices.map((index: number) => res.data.dates[index]);
 	rankBarChartOption.value.xAxis.data = dates;
 	salesBarChartOption.value.xAxis.data = dates;
 	audienceCountBarChartOption.value.xAxis.data = dates;
 	screeningsCountBarChartOption.value.xAxis.data = dates;
 	theatersCountBarChartOption.value.xAxis.data = dates;
-	rankBarChartOption.value.series[0].data = nonZeroDataIndices.map(index => res.data.rank[0].datas.map((data: any) => (data === 0 ? null : -data + 11))[index]);
-	salesBarChartOption.value.series[0].data = nonZeroDataIndices.map(index => res.data.sales[0].datas.map((data: any) => data / 100000000)[index]);
-	audienceCountBarChartOption.value.series[0].data = nonZeroDataIndices.map(index => res.data.audienceCount[0].datas.map((data: any) => data / 10000)[index]);
-	screeningsCountBarChartOption.value.series[0].data = nonZeroDataIndices.map(index => res.data.screeningsCount[0].datas[index]);
-	theatersCountBarChartOption.value.series[0].data = nonZeroDataIndices.map(index => res.data.theatersCount[0].datas[index]);
+	rankBarChartOption.value.series[0].data = nonZeroDataIndices.map((index: number) => res.data.rank[0].datas.map((data: any) => (data === 0 ? null : -data + 11))[index]);
+	salesBarChartOption.value.series[0].data = nonZeroDataIndices.map((index: number) => res.data.sales[0].datas.map((data: any) => data / 100000000)[index]);
+	audienceCountBarChartOption.value.series[0].data = nonZeroDataIndices.map((index: number) => res.data.audienceCount[0].datas.map((data: any) => data / 10000)[index]);
+	screeningsCountBarChartOption.value.series[0].data = nonZeroDataIndices.map((index: number) => res.data.screeningsCount[0].datas[index]);
+	theatersCountBarChartOption.value.series[0].data = nonZeroDataIndices.map((index: number) => res.data.theatersCount[0].datas[index]);
 });
 </script>
 

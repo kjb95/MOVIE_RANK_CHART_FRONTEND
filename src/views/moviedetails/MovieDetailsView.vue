@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { findMoviesByIdApi } from '@/api/movies';
 import { useRoute } from 'vue-router';
-import { computed, reactive } from 'vue';
+import { computed, onMounted, reactive } from 'vue';
 import { noImgUrl } from '@/constants/path';
 import BarCharts from '@/components/moviedetails/BarCharts.vue';
 
@@ -42,7 +42,8 @@ const movieData = reactive({
 	ratingGrade: '',
 });
 
-findMoviesByIdApi(moviesId.value).then(res => {
+onMounted(async () => {
+	const res = await findMoviesByIdApi(moviesId.value);
 	const data = res.data.movies[0];
 	movieData.title = data.title;
 	movieData.openingDate = data.openingDate;

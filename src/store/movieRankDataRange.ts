@@ -5,15 +5,11 @@ import { findMovieRankDataRangeApi } from '@/api/movieOpenApiHistory';
 export const useMovieRankDataRangeStore = defineStore('movieRankDataRange', () => {
 	const state = reactive({ startDate: '', endDateDaily: '' });
 
-	const findMovieDataRange = () => {
-		findMovieRankDataRangeApi()
-			.then(res => findMovieRankDataRangeApiSuccess(res.data))
-			.catch(e => console.log(e));
-	};
-
-	const findMovieRankDataRangeApiSuccess = (data: any) => {
+	const findMovieDataRange = async () => {
+		const data: any = await findMovieRankDataRangeApi();
 		state.startDate = data.startDate;
 		state.endDateDaily = data.endDateDaily;
 	};
+
 	return { state, findMovieDataRange };
 });

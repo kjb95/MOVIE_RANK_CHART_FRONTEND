@@ -12,11 +12,8 @@ import { deleteRefreshTokenApi } from '@/api/refreshToken';
 
 const user = useUsersStore();
 
-const logout = () => {
-	deleteRefreshTokenApi().then(deleteRefreshTokenApiSuccess);
-};
-
-const deleteRefreshTokenApiSuccess = () => {
+const logout = async () => {
+	await deleteRefreshTokenApi();
 	user.clear();
 	window.location.href = '/';
 };

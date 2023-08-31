@@ -39,7 +39,9 @@ const handlePieChartClick = params => {
 	router.push(`/movie-details/${params.data.id}`);
 };
 
-const findMovieRankPieChartApiSuccess = res => {
+watchEffect(async () => {
+	const res = await findMovieRankPieChartApi(formatDate(props.datePeriod?.[0]), formatDate(props.datePeriod?.[1]));
+
 	salesPieChartOption.value = { ...salesPieChartOption.value };
 	audienceCountPieChartOption.value = { ...audienceCountPieChartOption.value };
 	screeningsCountPieChartOption.value = { ...screeningsCountPieChartOption.value };
@@ -49,10 +51,6 @@ const findMovieRankPieChartApiSuccess = res => {
 	audienceCountPieChartOption.value.series[0].data = res.data.audienceCount;
 	screeningsCountPieChartOption.value.series[0].data = res.data.screeningsCount;
 	theatersCountPieChartOption.value.series[0].data = res.data.theatersCount;
-};
-
-watchEffect(() => {
-	findMovieRankPieChartApi(formatDate(props.datePeriod?.[0]), formatDate(props.datePeriod?.[1])).then(findMovieRankPieChartApiSuccess);
 });
 </script>
 <style scoped>
